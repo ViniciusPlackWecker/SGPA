@@ -40,12 +40,12 @@
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-gray-100 border border-gray-200 dark:border-gray-700">
                                         @if(Auth::user()->role === 'teacher')
-                                            <a href="{{ route(''" class="border border-green-600 rounded-lg inline-flex items-center px-4 py-2 text-white bg-green-600 hover:bg-green-700 ml-2">
+                                            <a href="{{ route('') }}" class="border border-green-600 rounded-lg inline-flex items-center px-4 py-2 text-white bg-green-600 hover:bg-green-700 ml-2">
                                                 Editar
                                             </a>
                                             
                                         @endif
-                                        <a href="{{ route(''" class="border border-green-600 rounded-lg inline-flex items-center px-4 py-2 text-white bg-green-600 hover:bg-green-700 ml-2">
+                                        <a href="{{ route('messages.createWithReceiver', $student->id) }}" class="border border-green-600 rounded-lg inline-flex items-center px-4 py-2 text-white bg-green-600 hover:bg-green-700 ml-2">
                                             Entrar em contato
                                         </a>  
                                     </td>
