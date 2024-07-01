@@ -19,6 +19,26 @@
                         {{ __('Home') }}
                     </x-nav-link>
                 </div>
+                <!--<div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                    <x-nav-link :href="route('home')" :active="request()->routeIs('home')">
+                        {{ __('Projects') }}
+                    </x-nav-link>
+                </div> -->
+                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                    <x-nav-link :href="route('user.students')" :active="request()->routeIs('user.students')">
+                        {{ __('Alunos') }}
+                    </x-nav-link>
+                </div> 
+                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                    <x-nav-link :href="route('user.teachers')" :active="request()->routeIs('user.teachers')">
+                        {{ __('Professores') }}
+                    </x-nav-link>
+                </div>
+                <!-- <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                    <x-nav-link :href="route('home')" :active="request()->routeIs('home')">
+                        {{ __('Home') }}
+                    </x-nav-link>
+                </div> -->
             </div>
 
             <div class="hidden sm:flex sm:items-center sm:ms-6">

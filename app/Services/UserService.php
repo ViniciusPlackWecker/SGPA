@@ -103,4 +103,9 @@ class UserService
         $user->delete();
     }
 
+    public function getUsersByRole(string $role)
+    {
+        return User::where('role', $role)->get();
+    }
+
 }

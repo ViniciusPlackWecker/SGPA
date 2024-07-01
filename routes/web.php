@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ProjectController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -13,9 +15,26 @@ Route::middleware('auth')->group(function () {
         return view('home');
     })->middleware(['verified'])->name('home');
 
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    Route::name('profile.')->prefix('profile')->group(callback: function () {
+        Route::name('edit'   ) ->get   ('edit'    , [ProfileController::class, 'edit'   ]);
+        Route::name('update' ) ->patch ('update'  , [ProfileController::class, 'update' ]);
+        Route::name('destroy') ->delete('destroy' , [ProfileController::class, 'destroy']);
+    });
+
+    //  Route::name('project.')->prefix('project')->group(callback: function () {
+    //     Route::name('index' ) ->get  ('index' ,   [ProjectController::class, 'index' ]);
+    //     Route::name('create') ->get  ('create',   [ProjectController::class, 'create']);
+    //     Route::name('store' ) ->post ('store' ,   [ProjectController::class, 'store' ]);
+    //     Route::name('show'  ) ->get  ('show'  ,   [ProjectController::class, 'show'  ]);
+    //     Route::name('edit'  ) ->get  ('edit'  ,   [ProjectController::class, 'edit'  ]);
+    //     Route::name('update') ->patch('update',   [ProjectController::class, 'update']);
+    //     Route::name('delete') ->get  ('delete',   [ProjectController::class, 'delete']);
+    //  });
+
+    Route::name('user.')->prefix('user')->group(callback: function() {
+        Route::name('students') ->get ('students', [UserController::class, 'showStudents']);
+        Route::name('teachers') ->get ('teachers', [UserController::class, 'showTeachers']);
+    });
 });
 
 require __DIR__.'/auth.php';
