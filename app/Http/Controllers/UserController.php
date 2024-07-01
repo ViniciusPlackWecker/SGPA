@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
+use App\DTOs\UserDTO;
 
 class UserController extends Controller
 {
@@ -22,18 +23,21 @@ class UserController extends Controller
     /**
      * Display a listing of students.
      */
-    public function showStudents()
+    public function showStudents(): View
     {
-        $students = $this->userService->getUsersByRole('student');
+        $userId = auth()->user()->id;
+        $students = $this->userService->getAllStudentsExcept($userId);
+
         return view('user.students', compact('students'));
     }
 
         /**
      * Display a listing of teachers.
      */
-    public function showTeachers()
+    public function showTeachers(): View
     {
-        $teachers = $this->userService->getUsersByRole('teacher');
+        $userId = auth()->user()->id;
+        $teachers = $this->userService->getAllTeachersExcept($userId);
         return view('user.teachers', compact('teachers'));
     }
 

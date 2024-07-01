@@ -7,6 +7,7 @@ use App\DTOs\UserDTO;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\ValidationException;
+use Illuminate\Support\Collection;
 
 class UserService
 {
@@ -106,6 +107,26 @@ class UserService
     public function getUsersByRole(string $role)
     {
         return User::where('role', $role)->get();
+    }
+
+    public function getAllStudentsExcept(int $userId): Collection
+    {
+        return User::where('role', 'student')
+                    ->where('id', '!=', $userId)
+                    ->get()
+                    ->map(function ($user) {
+                        return new UserDTO($user->id, $user->first_name, $user->last_name, $user->email, $user->birthday, $user->phone, $user->role);
+                    });
+    }
+
+    public function getAllTeachersExcept(int $userId): Collection
+    {
+        return User::where('role', 'teacher')
+                    ->where('id', '!=', $userId)
+                    ->get()
+                    ->map(function ($user) {
+                        return new UserDTO($user->id, $user->first_name, $user->last_name, $user->email, $user->birthday, $user->phone, $user->role);
+                    });
     }
 
 }
