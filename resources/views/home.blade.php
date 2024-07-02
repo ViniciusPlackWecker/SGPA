@@ -1,6 +1,6 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
+        <h2 class="font-semibold text-xl text-gray-400 text-gray-400 leading-tight">
             {{ __('Bem-vindo(a) ao Sistema de Gestão de Projetos Acadêmicos, :name', ['name' => Auth::user()->first_name]) }}
         </h2>
     </x-slot>

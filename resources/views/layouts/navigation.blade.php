@@ -8,7 +8,7 @@
 
                 <div class="shrink-0 flex items-center">
                     <a href="{{ route('home') }}" class="flex items-center">
-                        <span class="text-lg font-bold text-gray-800 dark:text-gray-200">SGPA</span>
+                        <span class="text-lg font-bold text-gray-800 dark:text-white">SGPA</span>
                     </a>
                 </div>
 

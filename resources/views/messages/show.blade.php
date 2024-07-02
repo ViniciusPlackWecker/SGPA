@@ -1,6 +1,6 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-white leading-tight">
+        <h2 class="font-semibold text-xl text-gray-400 leading-tight">
             {{ __('Mensagens no Tópico') }}: {{ $specificUserMessages[0]->cleanTopic }}
         </h2>
     </x-slot>
