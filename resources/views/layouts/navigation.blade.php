@@ -1,19 +1,18 @@
 <nav x-data="{ open: false }" class="bg-white dark:bg-gray-800 border-b border-gray-100 dark:border-gray-700">
-    <!-- Primary Navigation Menu -->
+
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between h-16">
 
-            <!-- Authenticated User Dropdown (shown for authenticated users) -->
             @auth
             <div class="flex">
-                <!-- Logo -->
+
                 <div class="shrink-0 flex items-center">
                     <a href="{{ route('home') }}" class="flex items-center">
                         <span class="text-lg font-bold text-gray-800 dark:text-gray-200">SGPA</span>
                     </a>
                 </div>
 
-                <!-- Navigation Links -->
+
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                     <x-nav-link :href="route('home')" :active="request()->routeIs('home')">
                         {{ __('Home') }}
@@ -34,11 +33,11 @@
                         {{ __('Professores') }}
                     </x-nav-link>
                 </div>
-                <!-- <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <x-nav-link :href="route('home')" :active="request()->routeIs('home')">
-                        {{ __('Home') }}
+                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                    <x-nav-link :href="route('messages.index')" :active="request()->routeIs('messages.index')">
+                        {{ __('Mensagens') }}
                     </x-nav-link>
-                </div> -->
+                </div>
             </div>
 
             <div class="hidden sm:flex sm:items-center sm:ms-6">
@@ -60,7 +59,7 @@
                             {{ __('Profile') }}
                         </x-dropdown-link>
 
-                        <!-- Authentication -->
+
                         <form method="POST" action="{{ route('logout') }}">
                             @csrf
 
@@ -76,21 +75,21 @@
             @else
 
             <div class="flex">
-                <!-- Logo -->
+
                 <div class="shrink-0 flex items-center">
                     <a href="{{ route('welcome') }}" class="flex items-center">
                         <span class="text-lg font-bold text-gray-800 dark:text-gray-200">SGPA</span>
                     </a>
                 </div>
 
-                <!-- Navigation Links -->
+
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                     <x-nav-link :href="route('welcome')" :active="request()->routeIs('welcome')">
                         {{ __('Home') }}
                     </x-nav-link>
                 </div>
             </div>
-            <!-- Guest Links (shown for guests) -->
+
             <div class="hidden sm:flex sm:items-center sm:ms-6">
                 <div class="space-x-4">
                     <x-nav-link :href="route('login')" :active="request()->routeIs('login')">
@@ -104,7 +103,7 @@
             </div>
             @endauth
 
-            <!-- Hamburger Menu (shown on small screens) -->
+
             <div class="-me-2 flex items-center sm:hidden">
                 <button @click="open = ! open" class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 dark:text-gray-500 hover:text-gray-500 dark:hover:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-900 focus:outline-none focus:bg-gray-100 dark:focus:bg-gray-900 focus:text-gray-500 dark:focus:text-gray-400 transition duration-150 ease-in-out">
                     <svg class="h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
@@ -116,7 +115,7 @@
         </div>
     </div>
 
-    <!-- Responsive Navigation Menu -->
+
     <div :class="{'block': open, 'hidden': ! open}" class="hidden sm:hidden">
         <div class="pt-2 pb-3 space-y-1">
             <x-responsive-nav-link :href="route('home')" :active="request()->routeIs('home')">
@@ -124,7 +123,30 @@
             </x-responsive-nav-link>
         </div>
 
-        <!-- Responsive Settings Options -->
+        <!-- <div class="pt-2 pb-3 space-y-1">
+            <x-responsive-nav-link :href="route('home')" :active="request()->routeIs('home')">
+                {{ __('Projects') }}
+            </x-responsive-nav-link>
+        </div> -->
+
+        <div class="pt-2 pb-3 space-y-1">
+            <x-responsive-nav-link :href="route('user.students')" :active="request()->routeIs('user.students')">
+                {{ __('Alunos') }}
+            </x-responsive-nav-link>
+        </div>
+
+        <div class="pt-2 pb-3 space-y-1">
+            <x-responsive-nav-link :href="route('user.teachers')" :active="request()->routeIs('user.teachers')">
+                {{ __('Professores') }}
+            </x-responsive-nav-link>
+        </div>
+
+        <div class="pt-2 pb-3 space-y-1">
+            <x-responsive-nav-link :href="route('messages.index')" :active="request()->routeIs('messages.index')">
+                {{ __('Mensagens') }}
+            </x-responsive-nav-link>
+        </div>
+
         <div class="pt-4 pb-1 border-t border-gray-200 dark:border-gray-600">
             @auth
             <div class="px-4">
@@ -137,7 +159,7 @@
                     {{ __('Profile') }}
                 </x-responsive-nav-link>
 
-                <!-- Authentication -->
+
                 <form method="POST" action="{{ route('logout') }}">
                     @csrf
 

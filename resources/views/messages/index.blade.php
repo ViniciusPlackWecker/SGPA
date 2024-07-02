@@ -12,9 +12,19 @@
                     <h3 class="text-lg font-semibold text-gray-900 dark:text-gray-200 mb-4">Conversas:</h3>
                     <ul class="divide-y divide-gray-200 dark:divide-gray-700">
                         @forelse ($conversations as $conversation)
-                            <li class="py-2">
-                                <a href="{{ route('messages.show', ['topic' => $conversation->topic, 'userId' => $userId]) }}" class="text-blue-600 hover:text-blue-900">{{ $conversation->topic }}</a>
-                            </li>
+                            <div class="my-4 p-4 bg-gray-100 rounded-md mb-4">
+                                <li class="py-2 flex justify-between items-center">
+                                    <div>
+                                        <strong>Assunto:</strong>
+                                        <span class="text-dark">{{ $conversation->cleanTopic }}</span>
+                                    </div>
+                                    <div class="ml-auto">
+                                        <a href="{{ route('messages.show', ['topic' => $conversation->topic]) }}" class="border bg-blue-600 hover:bg-blue-700 text-dark font-bold py-2 px-4 rounded">
+                                            {{ __('visualizar mensagens') }}
+                                        </a>
+                                    </div>
+                                </li>
+                            </div>
                         @empty
                             <li class="py-2 text-gray-500 dark:text-gray-400">Nenhuma conversa encontrada.</li>
                         @endforelse

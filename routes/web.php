@@ -3,6 +3,7 @@
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\MessageController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -34,6 +35,15 @@ Route::middleware('auth')->group(function () {
     Route::name('user.')->prefix('user')->group(callback: function() {
         Route::name('students') ->get ('students', [UserController::class, 'showStudents']);
         Route::name('teachers') ->get ('teachers', [UserController::class, 'showTeachers']);
+    });
+
+    Route::name('messages.')->prefix('messages')->group(callback: function() {
+        Route::name('index'             ) ->get ('index'                , [MessageController::class, 'index'             ]);
+        Route::name('createWithReceiver') ->get ('create/{receiver_id}' , [MessageController::class, 'createWithReceiver']);
+        Route::name('create'            ) ->get ('create'               , [MessageController::class, 'create'            ]);
+        Route::name('show'              ) ->get ('show/{topic}'         , [MessageController::class, 'show'              ]);
+        Route::name('store'             ) ->post('store'                , [MessageController::class, 'store'             ]);
+        Route::name('storeInTopic'      ) ->post('storeInTopic'         , [MessageController::class, 'storeInTopic'      ]);
     });
 });
 
