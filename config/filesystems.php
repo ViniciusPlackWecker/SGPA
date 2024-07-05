@@ -30,9 +30,15 @@ return [
 
     'disks' => [
 
-        'local' => [
+        'new' => [
             'driver' => 'local',
-            'root' => storage_path('app'),
+            'root' => storage_path('app/Current_files'),
+            'throw' => false,
+        ],
+
+        'old' => [
+            'driver' => 'local',
+            'root' => storage_path('app/Old_files'),
             'throw' => false,
         ],
 

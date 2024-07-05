@@ -1,7 +1,7 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\ProjectController;
+use App\Http\Controllers\FileController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\MessageController;
 use Illuminate\Support\Facades\Route;
@@ -22,15 +22,16 @@ Route::middleware('auth')->group(function () {
         Route::name('destroy') ->delete('destroy' , [ProfileController::class, 'destroy']);
     });
 
-    //  Route::name('project.')->prefix('project')->group(callback: function () {
-    //     Route::name('index' ) ->get  ('index' ,   [ProjectController::class, 'index' ]);
-    //     Route::name('create') ->get  ('create',   [ProjectController::class, 'create']);
-    //     Route::name('store' ) ->post ('store' ,   [ProjectController::class, 'store' ]);
-    //     Route::name('show'  ) ->get  ('show'  ,   [ProjectController::class, 'show'  ]);
-    //     Route::name('edit'  ) ->get  ('edit'  ,   [ProjectController::class, 'edit'  ]);
-    //     Route::name('update') ->patch('update',   [ProjectController::class, 'update']);
-    //     Route::name('delete') ->get  ('delete',   [ProjectController::class, 'delete']);
-    //  });
+     Route::name('project.')->prefix('project')->group(callback: function () {
+        Route::name('index'   ) ->get  ('index'           ,   [FileController::class, 'index'   ]);
+        Route::name('show'    ) ->get  ('show/{userId}'   ,   [FileController::class, 'show'    ]);
+        Route::name('download') ->get  ('download/{id}'   ,   [FileController::class, 'download']);
+        Route::name('create'  ) ->get  ('create'          ,   [FileController::class, 'create'  ]);
+        Route::name('store'   ) ->post ('store'           ,   [FileController::class, 'store'   ]);
+    //     Route::name('edit'  ) ->get  ('edit'  ,   [FileController::class, 'edit'  ]);
+    //     Route::name('update') ->patch('update',   [FileController::class, 'update']);
+    //     Route::name('delete') ->get  ('delete',   [FileController::class, 'delete']);
+     });
 
     Route::name('user.')->prefix('user')->group(callback: function() {
         Route::name('students') ->get ('students', [UserController::class, 'showStudents']);
@@ -45,6 +46,7 @@ Route::middleware('auth')->group(function () {
         Route::name('store'             ) ->post('store'                , [MessageController::class, 'store'             ]);
         Route::name('storeInTopic'      ) ->post('storeInTopic'         , [MessageController::class, 'storeInTopic'      ]);
     });
+
 });
 
 require __DIR__.'/auth.php';
