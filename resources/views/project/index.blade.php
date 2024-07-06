@@ -15,11 +15,9 @@
     </x-slot>
 
     <div class="py-12 flex">
-        <!-- Sidebar for filters -->
         <div class="w-1/4 p-4 bg-white dark:bg-gray-800 rounded-lg shadow-sm">
             <h3 class="text-lg font-semibold text-gray-900 dark:text-gray-200 mb-4">Filtros</h3>
             
-            <!-- Filter by Tags -->
             <div class="mb-4">
                 <h4 class="text-md font-semibold text-gray-700 dark:text-gray-300">Tags:</h4>
                 <div class="flex flex-col">
@@ -33,7 +31,6 @@
             </div>
         </div>
 
-        <!-- Main content for projects -->
         <div class="w-3/4 px-6 lg:px-8">
             @foreach (['approvedFiles' => 'Aprovado'] as $fileType => $status)
                 @if (count($$fileType) > 0)
@@ -68,7 +65,6 @@
         </div>
     </div>
 
-    <!-- JavaScript for Filtering -->
     <script src="{{ asset('js/file-filter.js') }}"> </script>
     <style>
         .tag-checkbox:focus {
