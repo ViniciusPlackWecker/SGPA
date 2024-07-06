@@ -17,9 +17,10 @@ Route::middleware('auth')->group(function () {
     })->middleware(['verified'])->name('home');
 
     Route::name('profile.')->prefix('profile')->group(callback: function () {
-        Route::name('edit'   ) ->get   ('edit'    , [ProfileController::class, 'edit'   ]);
-        Route::name('update' ) ->patch ('update'  , [ProfileController::class, 'update' ]);
-        Route::name('destroy') ->delete('destroy' , [ProfileController::class, 'destroy']);
+        Route::name('edit'      ) ->get   ('edit'           , [ProfileController::class, 'edit'      ]);
+        Route::name('update'    ) ->patch ('update'         , [ProfileController::class, 'update'    ]);
+        Route::name('destroy'   ) ->delete('destroy'        , [ProfileController::class, 'destroy'   ]);
+        Route::name('updateRole') ->patch ('updateRole/{id}', [ProfileController::class, 'updateRole']);
     });
 
      Route::name('project.')->prefix('project')->group(callback: function () {

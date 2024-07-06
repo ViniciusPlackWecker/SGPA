@@ -129,4 +129,14 @@ class UserService
                     });
     }
 
+    public function updateUserRole(string $userRole, int $id)
+    {
+        $user = User::findOrFail($id);
+        $user->role = $userRole;
+
+        $user->update();
+
+        return $user;
+    }
+
 }

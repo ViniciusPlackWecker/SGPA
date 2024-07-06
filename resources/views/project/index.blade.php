@@ -32,10 +32,7 @@
                         </div>
                     @endforeach
                 </div>
-            @endif
-
-            <!-- Caso não haja arquivos em nenhum dos status -->
-            @if (count($approvedFiles) == 0 && count($pendingFiles) == 0 && count($refusedFiles) == 0)
+                @else
                 <p class="text-gray-500 dark:text-gray-400 text-center mt-8">Nenhum arquivo encontrado.</p>
             @endif
         </div>

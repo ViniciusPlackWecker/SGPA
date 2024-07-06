@@ -63,4 +63,14 @@ class ProfileController extends Controller
 
         return Redirect::to('/');
     }
+
+    public function updateRole(Request $request, int $id): RedirectResponse
+    {
+
+            $userRole = $request->input('role_select');
+
+            $this->userService->updateUserRole($userRole, $id);
+
+            return redirect()->back()->with('status', 'role-updated');
+    }
 }
