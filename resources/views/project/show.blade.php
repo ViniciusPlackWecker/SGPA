@@ -46,12 +46,16 @@
                                         @endforeach
                                     </p>
                                     <div class="flex justify-end">
-                                        <a href="{{ route('project.download', ['id' => $file->id]) }}" class="border bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-                                            {{ __('Baixar') }}
-                                        </a>
-                                        <a href="{{ route('project.edit', ['id' => $file->id]) }}" class="border bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-                                            {{ __('Editar') }}
-                                        </a>
+                                        <div>
+                                            <a href="{{ route('project.download', ['id' => $file->id]) }}" class="border bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                                                {{ __('Baixar') }}
+                                            </a>
+                                        </div>
+                                        <div>
+                                            <a href="" class="border bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                                                {{ __('Editar') }}
+                                            </a>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
