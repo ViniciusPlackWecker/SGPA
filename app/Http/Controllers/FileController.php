@@ -27,9 +27,11 @@ class FileController extends Controller
      */
     public function index()
     {
-        $approvedFiles = File::where('status', 'approved')->get();
+        $approvedFiles = File::where('status', 'approved')->with('tags')->with('advisor')->with('owner')->get();
+        
+        $tags = Tag::all();
 
-        return view('project.index', compact('approvedFiles'));
+        return view('project.index', compact('approvedFiles', 'tags'));
     }
 
     /**
@@ -73,15 +75,13 @@ class FileController extends Controller
      */
     public function show(string $userId)
     {
-        $approvedFiles = File::where('owner_id', $userId)->where('status', 'approved')->get();
-        $pendingFiles = File::where('owner_id', $userId)->where('status', 'pending')->get();
-        $refusedFiles = File::where('owner_id', $userId)->where('status', 'refused')->get();
-
-        $advisors = User::where('role', 'teacher')->get();
+        $approvedFiles = File::where('owner_id', $userId)->where('status', 'approved')->with('tags')->with('advisor')->get();
+        $pendingFiles  = File::where('owner_id', $userId)->where('status', 'pending' )->with('tags')->with('advisor')->get();
+        $refusedFiles  = File::where('owner_id', $userId)->where('status', 'refused' )->with('tags')->with('advisor')->get();
 
         $tags = Tag::all();
 
-        return view('project.show', compact('userId', 'approvedFiles', 'pendingFiles', 'refusedFiles', 'advisors', 'tags'));
+        return view('project.show', compact('userId', 'approvedFiles', 'pendingFiles', 'refusedFiles', 'tags'));
     }
 
     public function download($id)

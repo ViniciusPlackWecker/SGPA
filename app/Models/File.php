@@ -18,12 +18,12 @@ class File extends Model
         'status',
     ];
 
-    public function sender() 
+    public function owner() 
     {
         return $this->belongsTo(User::class, 'owner_id');
     }
 
-    public function receiver() 
+    public function advisor() 
     {
         return $this->belongsTo(User::class, 'advisor_id');
     }
