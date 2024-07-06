@@ -53,7 +53,7 @@ class FileController extends Controller
     {
         $request->validate([
             'advisor_id' => 'required|exists:users,id',
-            'file' => 'required|file|max:10240',
+            'file' => 'required|file|mimes:pdf,doc,docx|max:10240',
             'tags' => 'required|array',
             'tags.*' => 'exists:tags,id',
         ]);
@@ -62,9 +62,12 @@ class FileController extends Controller
 
         $tags = $request->input('tags');
 
-        $file = $this->fileService->storeFile($request->file('file'), $ownerId, $request->input('advisor_id'));
-
-        $file->tags()->attach($tags);
+        try {
+            $file = $this->fileService->storeFile($request->file('file'), $ownerId, $request->input('advisor_id'));
+            $file->tags()->attach($tags);
+        } catch (\Exception $e) {
+            return back()->withErrors(['file' => 'O arquivo deve ser um tipo de arquivo válido.'])->withInput();
+        }
 
         return redirect()->route('project.show', $ownerId)->with('success', 'Arquivo enviado com sucesso!');
     }

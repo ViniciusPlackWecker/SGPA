@@ -35,7 +35,10 @@
                         <label for="file" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Escolha seu arquivo a ser enviado:</label>
                         <div class="mb-4 flex items-center justify-between mt-1">
                             <div>
-                                <input type="file" name="file" id="file" class="border border-green-600 rounded-lg inline-flex items-center px-4 py-2 text-white bg-green-600 hover:bg-green-700" required>
+                                <input type="file" name="file" id="file" class="border border-green-600 rounded-lg inline-flex items-center px-4 py-2 text-white bg-green-600 hover:bg-green-700" required accept=".pdf,.doc,.docx">
+                                @error('file')
+                                    <p class="text-white text-xs mt-1">{{ $message }}</p>
+                                @enderror
                             </div>
                             <div class="flex-shrink-0">
                                 <button type="submit" class="border border-green-600 rounded-lg inline-flex items-center px-4 py-2 text-white bg-green-600 hover:bg-green-700">Enviar Arquivo</button>
