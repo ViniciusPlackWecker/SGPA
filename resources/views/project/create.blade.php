@@ -17,7 +17,7 @@
                             <select name="advisor_id" id="advisor_id" class="mt-1 p-2 block w-full border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" required>
                                 <option value="" disabled selected>Selecione um professor</option>
                                 @foreach($advisors as $advisor)
-                                    <option value="{{ $advisor->id }}">{{ $advisor->first_name }}</option>
+                                    <option value="{{ $advisor->id }}">{{ $advisor->first_name . ' ' . $advisor->last_name }}</option>
                                 @endforeach
                             </select>
                         </div>

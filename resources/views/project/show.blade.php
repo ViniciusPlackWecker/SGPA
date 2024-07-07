@@ -8,6 +8,14 @@
             <x-nav-link :href="route('project.show', ['userId' => Auth::id()])" :active="request()->routeIs('project.show')">
                 {{ __('Meus Projetos') }}
             </x-nav-link>
+            <x-nav-link :href="route('project.create')" :active="request()->routeIs('project.create')">
+                {{ __('Enviar novo projeto') }}
+            </x-nav-link>
+            @if (Auth::user()->role === 'teacher')
+            <x-nav-link :href="route('project.advisor', ['userId' => Auth::id()])" :active="request()->routeIs('project.advisor')">
+                {{ __('Meus projetos orientados') }}
+            </x-nav-link>
+            @endif
         </div>
     </x-slot>
 
@@ -31,13 +39,13 @@
         <div class="w-3/4 px-6 lg:px-8">
             @foreach (['approvedFiles' => 'Aprovado', 'pendingFiles' => 'Pendente', 'refusedFiles' => 'Recusado'] as $fileType => $status)
                 @if (count($$fileType) > 0)
-                    <h3 class="font-semibold text-lg text-gray-400 leading-tight">{{ $status }}</h3>
+                    <h3 class="font-semibold text-lg text-gray-400 leading-tight">Status: {{ $status }}</h3>
                     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 file-card" data-status="{{ strtolower($status) }}">
                         @foreach ($$fileType as $file)
                             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg file-item" data-status="{{ strtolower($status) }}">
                                 <div class="p-6 border-b border-gray-200 dark:border-gray-700">
                                     <h3 class="text-lg font-semibold text-gray-900 dark:text-gray-200 mb-4">{{ $file->old_name }}</h3>
-                                    <strong class="text-white">Orientador:</strong> <span class="text-white">{{ $file->advisor->first_name }}</span>
+                                    <strong class="text-white">Orientador:</strong> <span class="text-white">{{ $file->advisor->first_name . ' ' . $file->advisor->last_name }}</span>
                                     <p class="text-sm text-gray-600 dark:text-gray-400 mt-4 mb-4">Data de Envio: {{ $file->created_at->format('d/m/Y H:i:s') }}</p>
                                     <p class="text-sm text-gray-600 dark:text-gray-400 mb-4">Data de Atualização: {{ $file->updated_at->format('d/m/Y H:i:s') }}</p>
                                     <p class="text-sm text-gray-600 dark:text-gray-400 mb-4">Tags:
@@ -48,7 +56,7 @@
                                     <div class="flex justify-end">
                                         <div>
                                             <a href="{{ route('project.download', ['id' => $file->id]) }}" class="border bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-                                                {{ __('Baixar') }}
+                                            {{ __('Baixar Projeto') }}
                                             </a>
                                         </div>
                                         <div>

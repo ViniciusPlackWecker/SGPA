@@ -24,11 +24,13 @@ Route::middleware('auth')->group(function () {
     });
 
      Route::name('project.')->prefix('project')->group(callback: function () {
-        Route::name('index'   ) ->get  ('index'           ,   [FileController::class, 'index'   ]);
-        Route::name('show'    ) ->get  ('show/{userId}'   ,   [FileController::class, 'show'    ]);
-        Route::name('download') ->get  ('download/{id}'   ,   [FileController::class, 'download']);
-        Route::name('create'  ) ->get  ('create'          ,   [FileController::class, 'create'  ]);
-        Route::name('store'   ) ->post ('store'           ,   [FileController::class, 'store'   ]);
+        Route::name('index'        ) ->get    ('index'                     , [FileController::class, 'index'         ]);
+        Route::name('show'         ) ->get    ('show/{userId}'             , [FileController::class, 'show'          ]);
+        Route::name('download'     ) ->get    ('download/{id}'             , [FileController::class, 'download'      ]);
+        Route::name('create'       ) ->get    ('create'                    , [FileController::class, 'create'        ]);
+        Route::name('store'        ) ->post   ('store'                     , [FileController::class, 'store'         ]);
+        Route::name('advisor'      ) ->get    ('showAdvisor/{userId}'      , [FileController::class, 'showAdvisor'   ]);
+        Route::name('statusUpdate' ) ->patch  ('statusUpdate/{id}'         , [FileController::class, 'statusUpdate'  ]);
     //     Route::name('edit'  ) ->get  ('edit'  ,   [FileController::class, 'edit'  ]);
     //     Route::name('update') ->patch('update',   [FileController::class, 'update']);
     //     Route::name('delete') ->get  ('delete',   [FileController::class, 'delete']);
@@ -40,12 +42,12 @@ Route::middleware('auth')->group(function () {
     });
 
     Route::name('messages.')->prefix('messages')->group(callback: function() {
-        Route::name('index'             ) ->get ('index'                , [MessageController::class, 'index'             ]);
-        Route::name('createWithReceiver') ->get ('create/{receiver_id}' , [MessageController::class, 'createWithReceiver']);
-        Route::name('create'            ) ->get ('create'               , [MessageController::class, 'create'            ]);
-        Route::name('show'              ) ->get ('show/{topic}'         , [MessageController::class, 'show'              ]);
-        Route::name('store'             ) ->post('store'                , [MessageController::class, 'store'             ]);
-        Route::name('storeInTopic'      ) ->post('storeInTopic'         , [MessageController::class, 'storeInTopic'      ]);
+        Route::name('index'             ) ->get  ('index'               , [MessageController::class, 'index'             ]);
+        Route::name('createWithReceiver') ->get  ('create/{receiver_id}', [MessageController::class, 'createWithReceiver']);
+        Route::name('create'            ) ->get  ('create'              , [MessageController::class, 'create'            ]);
+        Route::name('show'              ) ->get  ('show/{topic}'        , [MessageController::class, 'show'              ]);
+        Route::name('store'             ) ->post ('store'               , [MessageController::class, 'store'             ]);
+        Route::name('storeInTopic'      ) ->post ('storeInTopic'        , [MessageController::class, 'storeInTopic'      ]);
     });
 
 });

@@ -98,10 +98,14 @@ class UserService
         );
     }
 
-    public function deleteUser(int $userId): void
+    public function updateUserRole(string $userRole, int $id)
     {
-        $user = User::findOrFail($userId);
-        $user->delete();
+        $user = User::findOrFail($id);
+        $user->role = $userRole;
+
+        $user->update();
+
+        return $user;
     }
 
     public function getUsersByRole(string $role)
@@ -129,14 +133,10 @@ class UserService
                     });
     }
 
-    public function updateUserRole(string $userRole, int $id)
+    public function deleteUser(int $userId): void
     {
-        $user = User::findOrFail($id);
-        $user->role = $userRole;
-
-        $user->update();
-
-        return $user;
+        $user = User::findOrFail($userId);
+        $user->delete();
     }
 
 }

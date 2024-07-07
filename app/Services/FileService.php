@@ -52,4 +52,14 @@ class FileService
         ]);
     }
 
+    public function updateStatus(string $fileStatus, int $id)
+    {
+        $file = File::findOrFail($id);
+        $file->status = $fileStatus;
+
+        $file->update();
+
+        return $file;
+    }
+
 }

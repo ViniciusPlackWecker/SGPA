@@ -7,6 +7,7 @@ use App\Models\File;
 use App\Models\Tag;
 use App\Services\FileService;
 use App\Http\Requests\StoreFileRequest;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
@@ -84,7 +85,26 @@ class FileController extends Controller
 
         $tags = Tag::all();
 
-        return view('project.show', compact('userId', 'approvedFiles', 'pendingFiles', 'refusedFiles', 'tags'));
+        return view('project.show', compact('approvedFiles', 'pendingFiles', 'refusedFiles', 'tags'));
+    }
+
+    public function showAdvisor(string $userId)
+    {
+        $advisedFiles = File::where('advisor_id', $userId)->with('tags')->with('owner')->get();
+
+        $tags = Tag::all();
+
+        return view('project.advisor', compact('advisedFiles', 'tags'));
+    }
+
+    public function statusUpdate(Request $request, int $id): RedirectResponse
+    {
+
+            $fileStatus = $request->input('status');
+
+            $this->fileService->updateStatus($fileStatus, $id);
+
+            return redirect()->back()->with('status', 'status-updated');
     }
 
     public function download($id)

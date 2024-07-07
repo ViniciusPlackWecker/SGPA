@@ -11,6 +11,11 @@
             <x-nav-link :href="route('project.create')" :active="request()->routeIs('project.create')">
                 {{ __('Enviar novo projeto') }}
             </x-nav-link>
+            @if (Auth::user()->role === 'teacher')
+            <x-nav-link :href="route('project.advisor', ['userId' => Auth::id()])" :active="request()->routeIs('project.advisor')">
+                {{ __('Meus projetos orientados') }}
+            </x-nav-link>
+            @endif
         </div>
     </x-slot>
 
@@ -40,8 +45,8 @@
                             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg file-item" data-status="{{ strtolower($status) }}">
                                 <div class="p-6 border-b border-gray-200 dark:border-gray-700">
                                     <h3 class="text-lg font-semibold text-gray-900 dark:text-gray-200 mb-4">{{ $file->old_name }}</h3>
-                                    <p class="text-white">Orientando: {{ $file->owner->first_name }}</p>
-                                    <p class="text-white">Orientador: {{ $file->advisor->first_name }}</p>
+                                    <p class="text-white">Orientando: {{ $file->owner->first_name . ' ' . $file->owner->last_name }}</p>
+                                    <p class="text-white">Orientador: {{ $file->advisor->first_name . ' ' . $file->advisor->last_name }}</p>
                                     <p class="text-sm text-gray-600 dark:text-gray-400 mt-4 mb-4">Data de Envio: {{ $file->created_at->format('d/m/Y H:i:s') }}</p>
                                     <p class="text-sm text-gray-600 dark:text-gray-400 mb-4">Data de Atualização: {{ $file->updated_at->format('d/m/Y H:i:s') }}</p>
                                     <p class="text-sm text-gray-600 dark:text-gray-400 mb-4">Tags:
@@ -51,7 +56,7 @@
                                     </p>
                                     <div class="flex justify-end">
                                         <a href="{{ route('project.download', ['id' => $file->id]) }}" class="border bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-                                            {{ __('Baixar') }}
+                                            {{ __('Baixar Projeto') }}
                                         </a>
                                     </div>
                                 </div>
