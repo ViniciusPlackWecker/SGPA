@@ -17,4 +17,9 @@ class Tag extends Model
     {
         return $this->belongsToMany(File::class, 'file_tag');
     }
+
+    public function setNameAttribute($value)
+    {
+        $this->attributes['name'] = strtolower($value);
+    }
 }

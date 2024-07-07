@@ -38,6 +38,18 @@
                         {{ __('Mensagens') }}
                     </x-nav-link>
                 </div>
+                @if (Auth::user()->role === 'teacher')
+                    <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                        <x-nav-link :href="route('tag.index')" :active="request()->routeIs('tag.index')">
+                            {{ __('Tags') }}
+                        </x-nav-link>
+                    </div>
+                    <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                        <x-nav-link :href="route('institution.index')" :active="request()->routeIs('institution.index')">
+                            {{ __('Instituições') }}
+                        </x-nav-link>
+                    </div> 
+                @endif
             </div>
 
             <div class="hidden sm:flex sm:items-center sm:ms-6">
@@ -117,35 +129,7 @@
 
 
     <div :class="{'block': open, 'hidden': ! open}" class="hidden sm:hidden">
-        <div class="pt-2 pb-3 space-y-1">
-            <x-responsive-nav-link :href="route('home')" :active="request()->routeIs('home')">
-                {{ __('Home') }}
-            </x-responsive-nav-link>
-        </div>
-
-        <div class="pt-2 pb-3 space-y-1">
-            <x-responsive-nav-link :href="route('project.index')" :active="request()->routeIs('project.index')">
-                {{ __('Projetos') }}
-            </x-responsive-nav-link>
-        </div>
-
-        <div class="pt-2 pb-3 space-y-1">
-            <x-responsive-nav-link :href="route('user.students')" :active="request()->routeIs('user.students')">
-                {{ __('Alunos') }}
-            </x-responsive-nav-link>
-        </div>
-
-        <div class="pt-2 pb-3 space-y-1">
-            <x-responsive-nav-link :href="route('user.teachers')" :active="request()->routeIs('user.teachers')">
-                {{ __('Professores') }}
-            </x-responsive-nav-link>
-        </div>
-
-        <div class="pt-2 pb-3 space-y-1">
-            <x-responsive-nav-link :href="route('messages.index')" :active="request()->routeIs('messages.index')">
-                {{ __('Mensagens') }}
-            </x-responsive-nav-link>
-        </div>
+        
 
         <div class="pt-4 pb-1 border-t border-gray-200 dark:border-gray-600">
             @auth
@@ -153,6 +137,48 @@
                 <div class="font-medium text-base text-gray-800 dark:text-gray-200">{{ Auth::user()->first_name }}</div>
                 <div class="font-medium text-sm text-gray-500">{{ Auth::user()->email }}</div>
             </div>
+
+            <div class="pt-2 pb-3 space-y-1">
+                <x-responsive-nav-link :href="route('home')" :active="request()->routeIs('home')">
+                    {{ __('Home') }}
+                </x-responsive-nav-link>
+            </div>
+
+            <div class="pt-2 pb-3 space-y-1">
+                <x-responsive-nav-link :href="route('project.index')" :active="request()->routeIs('project.index')">
+                    {{ __('Projetos') }}
+                </x-responsive-nav-link>
+            </div>
+
+            <div class="pt-2 pb-3 space-y-1">
+                <x-responsive-nav-link :href="route('user.students')" :active="request()->routeIs('user.students')">
+                    {{ __('Alunos') }}
+                </x-responsive-nav-link>
+            </div>
+
+            <div class="pt-2 pb-3 space-y-1">
+                <x-responsive-nav-link :href="route('user.teachers')" :active="request()->routeIs('user.teachers')">
+                    {{ __('Professores') }}
+                </x-responsive-nav-link>
+            </div>
+
+            <div class="pt-2 pb-3 space-y-1">
+                <x-responsive-nav-link :href="route('messages.index')" :active="request()->routeIs('messages.index')">
+                    {{ __('Mensagens') }}
+                </x-responsive-nav-link>
+            </div>
+            @if (Auth::user()->role === 'teacher')
+                <div class="pt-2 pb-3 space-y-1">
+                    <x-responsive-nav-link :href="route('tag.index')" :active="request()->routeIs('tag.index')">
+                        {{ __('Tags') }}
+                    </x-responsive-nav-link>
+                </div>
+                <div class="pt-2 pb-3 space-y-1">
+                    <x-responsive-nav-link :href="route('institution.index')" :active="request()->routeIs('institution.index')">
+                        {{ __('Instituições') }}
+                    </x-responsive-nav-link>
+                </div>
+             @endif
 
             <div class="mt-3 space-y-1">
                 <x-responsive-nav-link :href="route('profile.edit')">
