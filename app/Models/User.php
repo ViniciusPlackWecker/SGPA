@@ -24,6 +24,7 @@ class User extends Authenticatable
         'birthday',
         'phone',
         'role',
+        'institution_id',
     ];
 
     /**
@@ -45,5 +46,10 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    public function institution() 
+    {
+        return $this->belongsTo(Institution::class, 'institution_id');
+    }
 }
 

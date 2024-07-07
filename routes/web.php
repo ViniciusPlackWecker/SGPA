@@ -4,6 +4,8 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\FileController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\MessageController;
+use App\Http\Controllers\TagController;
+use App\Http\Controllers\InstitutionController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -50,6 +52,19 @@ Route::middleware('auth')->group(function () {
         Route::name('storeInTopic'      ) ->post ('storeInTopic'        , [MessageController::class, 'storeInTopic'      ]);
     });
 
+    Route::name('tag.')->prefix('tag')->group(callback: function() {
+        Route::name('index'  ) ->get   ('index'       , [TagController::class, 'index'  ]);
+        Route::name('destroy') ->get   ('destroy/{id}', [TagController::class, 'destroy']);
+        Route::name('update' ) ->patch ('update/{id}' , [TagController::class, 'update' ]);
+        Route::name('store'  ) ->post  ('index'       , [TagController::class, 'store'  ]);
+    });
+
+    Route::name('institution.')->prefix('institution')->group(callback: function() {
+        Route::name('index'  ) ->get   ('index'       , [InstitutionController::class, 'index'  ]);
+        Route::name('destroy') ->get   ('destroy/{id}', [InstitutionController::class, 'destroy']);
+        Route::name('update' ) ->patch ('update/{id}' , [InstitutionController::class, 'update' ]);
+        Route::name('store'  ) ->post  ('index'       , [InstitutionController::class, 'store'  ]);
+    });
 });
 
 require __DIR__.'/auth.php';
