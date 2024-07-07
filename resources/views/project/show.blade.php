@@ -61,7 +61,7 @@
                                             </a>
                                         </div>
                                         <div>
-                                            <a href="" class="border bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                                            <a href="{{ route('project.edit', ['id' => $file->id]) }}" class="border bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
                                                 {{ __('Editar') }}
                                             </a>
                                         </div>

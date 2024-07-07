@@ -24,15 +24,14 @@
         <div class="max-w-2xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700">
-                    <form action="{{ route('project.store') }}" method="POST" enctype="multipart/form-data">
+                    <form action="{{ route('project.update', ['id' => $file->id]) }}" method="POST" enctype="multipart/form-data">
                         @csrf
-                        
+                        @method('patch')
                         <div class="mb-4">
                             <label for="advisor_id" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Defina seu orientador:</label>
-                            <select name="advisor_id" id="advisor_id" class="js-example-basic-single mt-1 p-2 block w-full border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" required>
-                                <option value="" disabled selected>Selecione um professor</option>
+                            <select name="advisor_id" id="advisor_id" class="js-example-basic-single mt-1 p-2 block w-full border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
                                 @foreach($advisors as $advisor)
-                                    <option value="{{ $advisor->id }}">{{ $advisor->first_name . ' ' . $advisor->last_name }}</option>
+                                    <option value="{{ $advisor->id }}" {{ $file->advisor_id == $advisor->id ? 'selected' : '' }}>{{ $advisor->first_name . ' ' . $advisor->last_name }}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -41,7 +40,7 @@
                             <label for="tags" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Escolha as tags relacionadas ao projeto:</label>
                             <select class="js-example-basic-multiple mt-1 p-2 block w-full border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" name="tags[]" multiple="multiple">
                                 @foreach ($tags as $tag)
-                                    <option value="{{ $tag->id }}">{{ $tag->name }}</option>
+                                    <option value="{{ $tag->id }}" {{ in_array($tag->id, $file->tags->pluck('id')->toArray()) ? 'selected' : '' }}>{{ $tag->name }}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -50,7 +49,7 @@
                         <label for="file" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Escolha seu arquivo a ser enviado:</label>
                         <div class="mb-4 flex items-center justify-between mt-1">
                             <div>
-                                <input type="file" name="file" id="file" class="border border-green-600 rounded-lg inline-flex items-center px-4 py-2 text-white bg-green-600 hover:bg-green-700" required accept=".pdf">
+                                <input type="file" name="file" id="file" class="border border-green-600 rounded-lg inline-flex items-center px-4 py-2 text-white bg-green-600 hover:bg-green-700" accept=".pdf">
                                 @error('file')
                                     <p class="text-white text-xs mt-1">{{ $message }}</p>
                                 @enderror
@@ -58,8 +57,13 @@
                             <div class="flex-shrink-0">
                                 <button type="submit" class="border border-green-600 rounded-lg inline-flex items-center px-4 py-2 text-white bg-green-600 hover:bg-green-700">Enviar Arquivo</button>
                             </div>
+                            
                         </div>
+                        <p class="text-white mb-4">Nome do arquivo sendo editado: {{$file->old_name}}</p>
                     </form>
+                    <a href="{{ route('project.destroy', ['id' => $file->id]) }}" class="border bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">
+                        {{ __('Excluir Projeto') }}
+                    </a>
                 </div>
             </div>
         </div>
@@ -70,7 +74,7 @@
     <script>
         $(document).ready(function() {
             $('.js-example-basic-multiple').select2();
-            $('.js-example-basic-single').select2(); 
+            $('.js-example-basic-single').select2();
         });
     </script>
 </x-app-layout>

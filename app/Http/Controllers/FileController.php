@@ -11,6 +11,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\View\View;
 
 class FileController extends Controller
 {
@@ -26,7 +27,7 @@ class FileController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(): View
     {
         $approvedFiles = File::where('status', 'approved')->with('tags')->with('advisor')->with('owner')->get();
         
@@ -54,7 +55,7 @@ class FileController extends Controller
     {
         $request->validate([
             'advisor_id' => 'required|exists:users,id',
-            'file' => 'required|file|mimes:pdf,doc,docx|max:10240',
+            'file' => 'required|file|mimes:pdf|max:10240',
             'tags' => 'required|array',
             'tags.*' => 'exists:tags,id',
         ]);
@@ -77,7 +78,7 @@ class FileController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $userId)
+    public function show(string $userId): View
     {
         $approvedFiles = File::where('owner_id', $userId)->where('status', 'approved')->with('tags')->with('advisor')->get();
         $pendingFiles  = File::where('owner_id', $userId)->where('status', 'pending' )->with('tags')->with('advisor')->get();
@@ -88,7 +89,7 @@ class FileController extends Controller
         return view('project.show', compact('approvedFiles', 'pendingFiles', 'refusedFiles', 'tags'));
     }
 
-    public function showAdvisor(string $userId)
+    public function showAdvisor(string $userId): View
     {
         $advisedFiles = File::where('advisor_id', $userId)->with('tags')->with('owner')->get();
 
@@ -123,9 +124,15 @@ class FileController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(string $id): View
     {
-        //
+        $file = File::findOrFail($id);
+
+        $advisors = User::where('role', 'teacher')->get();
+
+        $tags = Tag::all();
+
+        return view('project.edit', compact('file', 'advisors', 'tags'));
     }
 
     /**
@@ -133,7 +140,13 @@ class FileController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        try{
+            $this->fileService->updateFile($id, $request);
+        }catch (\Exception $e) {
+            return back()->withErrors(['file' => 'O arquivo deve ser um tipo de arquivo válido.'])->withInput();
+        }
+
+        return redirect()->route('project.show', ['userId' => auth()->id()])->with('success', 'Arquivo atualizado com sucesso!');
     }
 
     /**
@@ -141,6 +154,8 @@ class FileController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $this->fileService->deleteFile($id);
+    
+        return redirect()->route('project.index');
     }
 }

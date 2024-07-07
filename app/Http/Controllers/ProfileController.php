@@ -36,9 +36,9 @@ class ProfileController extends Controller
     public function update(ProfileUpdateRequest $request): RedirectResponse
     {
 
-            $user = Auth::user();
+            $user = Auth::user()->id();
 
-            $this->userService->updateUser($user->id, $request->validated());
+            $this->userService->updateUser($user, $request->validated());
 
             return Redirect::route('profile.edit')->with('status', 'profile-updated');
     }

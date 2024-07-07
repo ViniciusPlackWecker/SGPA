@@ -24,16 +24,16 @@ Route::middleware('auth')->group(function () {
     });
 
      Route::name('project.')->prefix('project')->group(callback: function () {
-        Route::name('index'        ) ->get    ('index'                     , [FileController::class, 'index'         ]);
-        Route::name('show'         ) ->get    ('show/{userId}'             , [FileController::class, 'show'          ]);
-        Route::name('download'     ) ->get    ('download/{id}'             , [FileController::class, 'download'      ]);
-        Route::name('create'       ) ->get    ('create'                    , [FileController::class, 'create'        ]);
-        Route::name('store'        ) ->post   ('store'                     , [FileController::class, 'store'         ]);
-        Route::name('advisor'      ) ->get    ('showAdvisor/{userId}'      , [FileController::class, 'showAdvisor'   ]);
-        Route::name('statusUpdate' ) ->patch  ('statusUpdate/{id}'         , [FileController::class, 'statusUpdate'  ]);
-    //     Route::name('edit'  ) ->get  ('edit'  ,   [FileController::class, 'edit'  ]);
-    //     Route::name('update') ->patch('update',   [FileController::class, 'update']);
-    //     Route::name('delete') ->get  ('delete',   [FileController::class, 'delete']);
+        Route::name('index'       ) ->get   ('index'               , [FileController::class, 'index'       ]);
+        Route::name('show'        ) ->get   ('show/{userId}'       , [FileController::class, 'show'        ]);
+        Route::name('download'    ) ->get   ('download/{id}'       , [FileController::class, 'download'    ]);
+        Route::name('create'      ) ->get   ('create'              , [FileController::class, 'create'      ]);
+        Route::name('store'       ) ->post  ('store'               , [FileController::class, 'store'       ]);
+        Route::name('advisor'     ) ->get   ('showAdvisor/{userId}', [FileController::class, 'showAdvisor' ]);
+        Route::name('statusUpdate') ->patch ('statusUpdate/{id}'   , [FileController::class, 'statusUpdate']);
+        Route::name('edit'        ) ->get   ('edit/{id}'           , [FileController::class, 'edit'        ]);
+        Route::name('update'      ) ->patch ('update/{id}'         , [FileController::class, 'update'      ]);
+        Route::name('destroy'     ) ->get   ('destroy/{id}'        , [FileController::class, 'destroy'     ]);
      });
 
     Route::name('user.')->prefix('user')->group(callback: function() {

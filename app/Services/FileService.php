@@ -62,4 +62,44 @@ class FileService
         return $file;
     }
 
+    public function updateFile($id, $request)
+    {
+        $request->validate([
+            'advisor_id' => 'required|exists:users,id',
+            'file' => 'nullable|file|mimes:pdf|max:10240',
+            'tags' => 'required|array',
+            'tags.*' => 'exists:tags,id',
+        ]);
+
+        $file = File::findOrFail($id);
+        $originalFileName = $file->name;
+
+        if ($request->hasFile('file')) {
+            
+            $exists = Storage::disk('new')->exists($originalFileName);
+
+            if ($exists) {
+                if (Storage::disk('old')->exists($originalFileName)) {
+                    Storage::disk('old')->delete($originalFileName);
+                }
+                Storage::move('Current_files/' . $originalFileName, 'Old_files/' . $originalFileName);
+            }
+
+            $uploadedFile = $request->file('file');
+    
+            $newFileName = $originalFileName;
+            $uploadedFile = Storage::disk('new')->putFileAs('', $uploadedFile, $newFileName);
+        }
+
+        $file->advisor_id = $request->input('advisor_id');
+        $file->tags()->sync($request->input('tags'));
+        $file->save();
+    }
+
+    public function deleteFile(int $id): void
+    {
+        $file = File::findOrFail($id);
+        $file->delete();
+    }
+
 }
