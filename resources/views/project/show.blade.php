@@ -5,17 +5,18 @@
         </h2>
         <br>
         <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+            @if (Auth::user()->role === 'teacher')
+                <x-nav-link :href="route('project.advisor', ['userId' => Auth::id()])" :active="request()->routeIs('project.advisor')">
+                    {{ __('Meus projetos orientados') }}
+                </x-nav-link>
+            @endif
             <x-nav-link :href="route('project.show', ['userId' => Auth::id()])" :active="request()->routeIs('project.show')">
                 {{ __('Meus Projetos') }}
             </x-nav-link>
+            
             <x-nav-link :href="route('project.create')" :active="request()->routeIs('project.create')">
                 {{ __('Enviar novo projeto') }}
             </x-nav-link>
-            @if (Auth::user()->role === 'teacher')
-            <x-nav-link :href="route('project.advisor', ['userId' => Auth::id()])" :active="request()->routeIs('project.advisor')">
-                {{ __('Meus projetos orientados') }}
-            </x-nav-link>
-            @endif
         </div>
     </x-slot>
 
@@ -53,7 +54,7 @@
                                             <span class="bg-blue-500 text-white rounded px-2 py-1 file-tag" data-tag="{{ $tag->id }}">|   {{ $tag->name }}   |</span>
                                         @endforeach
                                     </p>
-                                    <div class="flex justify-end">
+                                    <div class="flex justify-between">
                                         <div>
                                             <a href="{{ route('project.download', ['id' => $file->id]) }}" class="border bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
                                             {{ __('Baixar Projeto') }}
