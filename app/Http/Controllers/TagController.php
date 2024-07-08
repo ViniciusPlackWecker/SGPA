@@ -1,62 +1,42 @@
 <?php
-
 namespace App\Http\Controllers;
 
-use App\Models\Tag;
-use Illuminate\Http\Request;
-use Illuminate\View\View;
+use App\Http\Controllers\Controller;
+use App\Http\Requests\TagRequest;
+use App\Services\TagService;
 
 class TagController extends Controller
 {
-    public function index() {
-        $tags = Tag::all();
+    protected TagService $tagService;
+
+    public function __construct(TagService $tagService)
+    {
+        $this->tagService = $tagService;
+    }
+
+    public function index()
+    {
+        $tags = $this->tagService->getAllTags();
         return view('tag.index', compact('tags'));
     }
 
-    public function update(Request $request, $id)
+    public function update(TagRequest $request, $id)
     {
-        $request->validate([
-            'name' => 'required|string|max:255',
-        ]);
-
-        // Verificar se o nome já existe (exceto a tag atual)
-        $existingTag = Tag::where('name', $request->name)->where('id', '!=', $id)->first();
-        if ($existingTag) {
-            return redirect()->back()->withErrors(['name' => 'Essa tag já existe.'])->withInput();
-        }
-
-        $tag = Tag::findOrFail($id);
-        $tag->name = $request->name;
-        $tag->save();
-
+        $data = $request->validated();
+        $tag = $this->tagService->updateTag($id, $data);
         return redirect()->back()->with('success', 'Tag atualizada com sucesso');
     }
 
     public function destroy($id)
     {
-        $tag = Tag::findOrFail($id);
-        $tag->delete();
-
+        $this->tagService->deleteTag($id);
         return redirect()->back()->with('success', 'Tag excluída com sucesso');
     }
 
-    public function store(Request $request)
+    public function store(TagRequest $request)
     {
-
-        $request->validate([
-            'name' => 'required|string|max:255|unique:tags,name',
-        ]);
-
-        // Verificar se o nome já existe
-        $existingTag = Tag::where('name', $request->name)->first();
-        if ($existingTag) {
-            return redirect()->back()->withErrors(['name' => 'Essa tag já existe.'])->withInput();
-        }
-
-        Tag::create([
-            'name' => $request->name,
-        ]);
-
+        $data = $request->validated();
+        $this->tagService->createTag($data);
         return redirect()->back()->with('success', 'Tag criada com sucesso');
     }
 }
