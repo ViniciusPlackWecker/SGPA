@@ -1,6 +1,6 @@
 <?php
 
-namespace App\DAO;
+namespace App\DAOs;
 
 use App\Models\Institution;
 use App\DTO\InstitutionDTO;

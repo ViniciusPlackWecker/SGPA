@@ -2,8 +2,8 @@
 
 namespace App\Services;
 
-use App\DAO\InstitutionDAO;
-use App\DTO\InstitutionDTO;
+use App\DAOs\InstitutionDAO;
+use App\DTOs\InstitutionDTO;
 use Illuminate\Support\Collection;
 
 class InstitutionService
