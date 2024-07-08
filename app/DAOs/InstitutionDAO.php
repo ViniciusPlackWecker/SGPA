@@ -3,7 +3,7 @@
 namespace App\DAOs;
 
 use App\Models\Institution;
-use App\DTO\InstitutionDTO;
+use App\DTOs\InstitutionDTO;
 use Illuminate\Support\Collection;
 
 class InstitutionDAO

@@ -3,7 +3,7 @@
 namespace App\DAOs;
 
 use App\Models\Tag;
-use App\DTO\TagDTO;
+use App\DTOs\TagDTO;
 use Illuminate\Support\Collection;
 
 class TagDAO
