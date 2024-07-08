@@ -2,7 +2,7 @@
 
 namespace App\DTO;
 
-class TagDTO
+class InstitutionDTO
 {
     public int $id;
     public string $name;
