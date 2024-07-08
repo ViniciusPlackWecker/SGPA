@@ -28,6 +28,7 @@ class UserService
             'password' => 'required|string|min:8|confirmed',
             'birthday' => 'required|date',
             'phone' => 'required|string|max:20',
+            'institution_id' => 'required|exists:institutions,id',
         ]);
 
         if ($validator->fails()) {
@@ -42,6 +43,7 @@ class UserService
             'password' => Hash::make($data['password']),
             'birthday' => $data['birthday'],
             'phone' => $data['phone'],
+            'institution_id' => $data['institution_id'],
         ]);
 
         // Return the UserDTO
@@ -52,6 +54,7 @@ class UserService
             $user->email,
             $user->birthday,
             $user->phone,
+            $user->institution ? $user->institution->id : null
         );
     }
 
@@ -72,6 +75,7 @@ class UserService
             'email' => 'required|string|email|max:255|unique:users,email,' . $id,
             'birthday' => 'required|date',
             'phone' => 'required|string|max:20',
+            'institution_id' => 'required|exists:institutions,id',
         ]);
 
         if ($validator->fails()) {
@@ -95,6 +99,7 @@ class UserService
             $user->email,
             $user->birthday,
             $user->phone,
+            $user->institution ? $user->institution->id : null
         );
     }
 
@@ -117,9 +122,10 @@ class UserService
     {
         return User::where('role', 'student')
                     ->where('id', '!=', $userId)
+                    ->with('institution')
                     ->get()
                     ->map(function ($user) {
-                        return new UserDTO($user->id, $user->first_name, $user->last_name, $user->email, $user->birthday, $user->phone, $user->role);
+                        return new UserDTO($user->id, $user->first_name, $user->last_name, $user->email, $user->birthday, $user->phone, $user->institution ? $user->institution->name : null);
                     });
     }
 
@@ -127,9 +133,10 @@ class UserService
     {
         return User::where('role', 'teacher')
                     ->where('id', '!=', $userId)
+                    ->with('institution')
                     ->get()
                     ->map(function ($user) {
-                        return new UserDTO($user->id, $user->first_name, $user->last_name, $user->email, $user->birthday, $user->phone, $user->role);
+                        return new UserDTO($user->id, $user->first_name, $user->last_name, $user->email, $user->birthday, $user->phone, $user->institution ? $user->institution->name : null);
                     });
     }
 

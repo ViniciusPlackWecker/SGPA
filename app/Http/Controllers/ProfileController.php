@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
+use App\Models\Institution;
 
 class ProfileController extends Controller
 {
@@ -25,8 +26,11 @@ class ProfileController extends Controller
      */
     public function edit()
     {
+        $institutions = Institution::all();
+
         return view('profile.edit', [
             'user' => auth()->user(),
+            'institutions' => $institutions,
         ]);
     }
 
@@ -36,7 +40,9 @@ class ProfileController extends Controller
     public function update(ProfileUpdateRequest $request): RedirectResponse
     {
 
-            $user = Auth::user()->id();
+        // dd($request->input('institution_id'));
+
+            $user = Auth::user()->id;
 
             $this->userService->updateUser($user, $request->validated());
 

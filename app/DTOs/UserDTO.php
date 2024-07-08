@@ -10,8 +10,9 @@ class UserDTO
     public $email;
     public $birthday;
     public $phone;
+    public $institution;
 
-    public function __construct($id, $first_name, $last_name, $email, $birthday, $phone)
+    public function __construct($id, $first_name, $last_name, $email, $birthday, $phone, $institution)
     {
         $this->id = $id;
         $this->first_name = $first_name;
@@ -19,5 +20,6 @@ class UserDTO
         $this->email = $email;
         $this->birthday = $birthday;
         $this->phone = $phone;
+        $this->institution = $institution;
     }
 }

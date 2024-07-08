@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rules;
 use Illuminate\View\View;
 use Illuminate\Validation\ValidationException;
+use App\Models\Institution;
 
 class RegisteredUserController extends Controller
 {
@@ -28,7 +29,11 @@ class RegisteredUserController extends Controller
      */
     public function create(): View
     {
-        return view('auth.register');
+        $institutions = Institution::all();
+
+        return view('auth.register', [
+            'institutions' => $institutions,
+        ]);
     }
 
     /**
