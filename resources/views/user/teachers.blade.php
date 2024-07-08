@@ -47,12 +47,12 @@
                                         {{ $teacher->email }}
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-300 border border-gray-200 dark:border-gray-700">
-                                        {{ $teacher->institution_id }}
+                                        {{ $teacher->institution }}
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-gray-100 border border-gray-200 dark:border-gray-700">
                                         <div class="flex justify-between">    
                                             <a href="{{ route('messages.createWithReceiver', $teacher->id) }}" class="border bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-                                                Entrar em contato
+                                                Enviar Mensagem
                                             </a>
                                         </div>
                                     </td>

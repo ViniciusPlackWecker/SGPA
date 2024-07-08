@@ -2,8 +2,8 @@
 
 namespace App\Services;
 
-use App\DAO\TagDAO;
-use App\DTO\TagDTO;
+use App\DAOs\TagDAO;
+use App\DTOs\TagDTO;
 use Illuminate\Support\Collection;
 
 class TagService
